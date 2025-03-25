@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News Portal{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mb-4">📰 News Portal</h1>
+
+        {% for category in categories %}
+            <div class="mb-5">
+                <h2>
+                    <a class="text-decoration-none" href="{{ path('public_category_news', { id: category.id }) }}">
+                        {{ category.title }}
+                    </a>
+                </h2>
+
+                <div class="list-group">
+                    {% for news in category.news|slice(0, 3) %}
+                        <div class="list-group-item">
+                            <h5 class="mb-1">{{ news.title }}</h5>
+                            <small class="text-muted">{{ news.insertDate|date('Y-m-d') }}</small>
+                            <p class="mb-1 mt-2">{{ news.shortDescription }}</p>
+                            <a href="{{ path('public_news_show', { id: news.id }) }}" class="btn btn-sm btn-outline-primary">Read more</a>
+                        </div>
+                    {% else %}
+                        <div class="list-group-item text-muted">No news available.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

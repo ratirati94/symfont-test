@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block body %}
+    | <a href="{{ path('admin_news_list') }}">Manage News</a>
+    | <a href="{{ path('admin_category_list') }}">Manage Categories</a>
+{% endblock %}

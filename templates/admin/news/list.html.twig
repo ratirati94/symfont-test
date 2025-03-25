@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>All News</h1>
+    <a href="{{ path('admin_news_new') }}" class="btn btn-success mb-3">➕ New News</a>
+
+    <ul class="list-group">
+        {% for news in news_list %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ news.title }}</strong>
+                    <small class="text-muted">({{ news.insertDate|date('Y-m-d H:i') }})</small>
+                </div>
+
+                <div>
+                    <a href="{{ path('admin_news_edit', { id: news.id }) }}" class="btn btn-sm btn-outline-primary me-2">✏ Edit</a>
+
+                    <form method="post"
+                          action="{{ path('admin_news_delete', { id: news.id }) }}"
+                          style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ news.id) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ news.id) }}">
+                        <button class="btn btn-sm btn-outline-danger">🗑 Delete</button>
+                    </form>
+                </div>
+            </li>
+        {% else %}
+            <li class="list-group-item text-muted">No news found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

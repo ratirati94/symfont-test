@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-2">{{ news.title }}</h1>
+        <p class="text-muted">{{ news.insertDate|date('Y-m-d H:i') }}</p>
+
+        <p>
+            <strong>Categories:</strong>
+            {% for category in news.categories %}
+                <span class="badge bg-secondary">{{ category.title }}</span>
+            {% else %}
+                <em>No categories</em>
+            {% endfor %}
+        </p>
+
+        {% if news.picture %}
+            <img src="{{ asset('uploads/news/' ~ news.picture) }}"
+                 alt="News Image"
+                 class="img-thumbnail me-2"
+                 style="max-width: 120px; height: auto;">
+
+        {% endif %}
+
+        <div class="mb-5">
+            {{ news.content|nl2br }}
+        </div>
+
+        <h2 class="mt-4">💬 Comments</h2>
+
+        {% if news.comments|length > 0 %}
+            <div class="list-group mb-4">
+                {% for comment in news.comments %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <strong>{{ comment.authorName }}</strong>
+                            <small class="text-muted">{{ comment.createdAt|date('Y-m-d H:i') }}</small>
+                        </div>
+                        <p class="mb-0 mt-2">{{ comment.content|e }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No comments yet. Be the first to comment!</p>
+        {% endif %}
+
+        <h3 class="mt-5">✍️ Leave a Comment</h3>
+
+        <div class="card mt-3 mb-5">
+            <div class="card-body">
+                {{ form_start(form, {
+                    action: path('public_news_comment', { id: news.id }),
+                    method: 'POST'
+                }) }}
+
+                <div class="mb-3">
+                    {{ form_label(form.authorName, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.authorName, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.authorName) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.content, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+                    {{ form_errors(form.content) }}
+                </div>
+
+                <button class="btn btn-primary">Submit</button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

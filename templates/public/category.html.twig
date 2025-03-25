@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category: {{ category.title }}{% endblock %}
+
+{% block body %}
+    <h1>Category: {{ category.title }}</h1>
+
+    <ul>
+        {% for news in newsPagination %}
+            <li>
+                <strong>{{ news.title }}</strong> – {{ news.insertDate|date('Y-m-d') }}
+                <br>
+                {{ news.shortDescription }}
+                <br>
+                <a href="{{ path('public_news_show', { id: news.id }) }}">Read more</a>
+            </li>
+        {% else %}
+            <li>No news in this category.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagination">
+        {{ knp_pagination_render(newsPagination) }}
+    </div>
+{% endblock %}
