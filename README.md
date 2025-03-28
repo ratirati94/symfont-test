@@ -14,7 +14,7 @@ credentials for admin authorization:
 2. psw:admin
 
 Command runner:
-* check -  .env.dev to make sure MAILER_DSN is provided
-* Run the command manually - docker compose exec php php bin/console app:send-weekly-top-news  
+* check -  `.env.dev` to make sure `MAILER_DSN` is provided
+* Run the command manually - `docker compose exec php php bin/console app:send-weekly-top-news`  
 
 
