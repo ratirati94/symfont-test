@@ -36,7 +36,7 @@ class SendWeeklyTopNewsCommand extends Command
         $topNews = $this->newsRepo->findTopNewsWithMostComments(10);
 
         if (empty($topNews)) {
-            $output->writeln('No news found.');
+            $output->writeln('No news found with comments.');
             return Command::SUCCESS;
         }
 

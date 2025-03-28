@@ -9,8 +9,12 @@
 5. Run `docker compose down --remove-orphans` to stop the Docker containers.
 
 
+credentials for admin authorization:
+1. usr:admin
+2. psw:admin
+
 Command runner:
 * check .env.dev to make sure MAILER_DSN is provided
-* to check the command manually run:  docker compose exec php php bin/console app:send-weekly-top-news  
+* Run the command manually run:  docker compose exec php php bin/console app:send-weekly-top-news  
 
 
