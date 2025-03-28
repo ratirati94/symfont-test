@@ -20,7 +20,6 @@ final class Version20250325180037 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP SEQUENCE test_item_id_seq CASCADE');
         $this->addSql('CREATE TABLE category (id SERIAL NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE news (id SERIAL NOT NULL, title VARCHAR(255) NOT NULL, short_description TEXT NOT NULL, content TEXT NOT NULL, insert_date DATE NOT NULL, picture VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE news_category (news_id INT NOT NULL, category_id INT NOT NULL, PRIMARY KEY(news_id, category_id))');
@@ -28,15 +27,12 @@ final class Version20250325180037 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_4F72BA9012469DE2 ON news_category (category_id)');
         $this->addSql('ALTER TABLE news_category ADD CONSTRAINT FK_4F72BA90B5A459A0 FOREIGN KEY (news_id) REFERENCES news (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE news_category ADD CONSTRAINT FK_4F72BA9012469DE2 FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('DROP TABLE test_item');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('CREATE SEQUENCE test_item_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE test_item (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('ALTER TABLE news_category DROP CONSTRAINT FK_4F72BA90B5A459A0');
         $this->addSql('ALTER TABLE news_category DROP CONSTRAINT FK_4F72BA9012469DE2');
         $this->addSql('DROP TABLE category');
